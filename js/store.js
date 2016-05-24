@@ -261,6 +261,7 @@ function Items(name,price,img,$parent,$P){
         },function(e,results){
             alert(e.message);
     })});
+
     //$shop_buy1.click(function(){
     //
     //    db.transaction(function(tx){
