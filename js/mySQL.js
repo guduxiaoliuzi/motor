@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/5/17.
  */
-var db= openDatabase("MY_games18",'1.0.1','我的本地数据库',1024);
+var db= openDatabase("MY_games18",'1.0.1','我的本地数据库',3*1024);
 $(function(){
     db.transaction(function(tx){
         /*用户资料列表*/
@@ -14,9 +14,9 @@ $(function(){
             "money       integer not null," +
             " online_time float," +
             "last_time   date)");
-        var user_table="insert into users (login, password, u_name, level, money)values ( ?,?,?,1,?)";
-        tx.executeSql(user_table,['admin','123','我喜欢',99999999]);
-        tx.executeSql(user_table,['lucifer','123456','Lucifer',100000]);
+        var user_table="insert into users (id,login, password, u_name, level, money)values (?, ?,?,?,1,?)";
+        tx.executeSql(user_table,[1,'admin','123','我喜欢',99999999]);
+        tx.executeSql(user_table,[2,'lucifer','123456','Lucifer',100000]);
         ///!*装备属性列表*!/
            tx.executeSql("create table if not exists equipment(" +
             "id         integer primary key autoincrement," +
@@ -26,24 +26,33 @@ $(function(){
             "value      integer," +                         /*属性*/
             "degree     integer default ( 1 )," +       /*等级*/
             " price     integer not null," +
-            "img        text    not null)");
-        var equipment_table="insert into equipment(name, type, value_type, value, price, img)values(?, ?, ?, ?, ?, ?)";
-        tx.executeSql(equipment_table,['哈雷摩托',1,1,110,8000,'img/moto01.png']);
-        tx.executeSql(equipment_table,['滑板车',1,1,76,5520,'img/moto02.png']);
-        tx.executeSql(equipment_table,['奔驰',1,1,86,5600,'img/moto03.png']);
-        tx.executeSql(equipment_table,['宝马',1,1,100,6870,'img/moto04.png']);    /*摩托车*/
-        tx.executeSql(equipment_table,['A1',2,2,10,1800,'img/wheel01.png']);
-        tx.executeSql(equipment_table,['A2',2,2,11,1830,'img/wheel02.png']);
-        tx.executeSql(equipment_table,['A3',2,2,14,2300,'img/wheel03.png']);
-        tx.executeSql(equipment_table,['A4',2,2,15,4200,'img/wheel04.png']);
-        tx.executeSql(equipment_table,['A5',2,2,18,4830,'img/wheel05.png']);
-        tx.executeSql(equipment_table,['A6',2,2,22,5300,'img/wheel06.png']);       /*摩托车轮*/
-        tx.executeSql(equipment_table,['TSI 1.4',3,3,10,3680,'img/engine01.png']);
-        tx.executeSql(equipment_table,['TFSI 2.0',3,3,12,8888,'img/engine03.png']);
-        tx.executeSql(equipment_table,['AMG 2.7',3,3,14,2300,'img/engine04.png']);
-        tx.executeSql(equipment_table,['CDI 2.7',3,3,18,9080,'img/engine05.png']);
-        tx.executeSql(equipment_table,['V8 3.8',3,3,19,10010,'img/engine06.png']);
-        tx.executeSql(equipment_table,['V8 4.5',3,3,22,12300,'img/engine07.png']);  /*引擎动机*/
+            "img        text    not null," +
+            "img2       text not null)");
+        var equipment_table="insert into equipment(name, type, value_type, value, price, img,img2)values(?, ?, ?, ?, ?, ?,?)";
+        tx.executeSql(equipment_table,['来买我',4,1,110,8000,'img/c1s.png','img/c1.png']);
+        tx.executeSql(equipment_table,['带走我',4,1,110,8000,'img/c2s.png','img/c2.png']);
+        tx.executeSql(equipment_table,['大麻哈1',4,1,110,8000,'img/c3s.png','img/c3.png']);
+        tx.executeSql(equipment_table,['大麻哈2',4,1,110,8000,'img/c4s.png','img/c4.png']);
+        tx.executeSql(equipment_table,['大麻哈3',4,1,110,8000,'img/c5s.png','img/c5.png']);
+        tx.executeSql(equipment_table,['大麻哈4',4,1,110,8000,'img/c6s.png','img/c6.png']);
+        tx.executeSql(equipment_table,['大麻哈5',4,1,110,8000,'img/c7s.png','img/c7.png']);
+        tx.executeSql(equipment_table,['大麻哈6',4,1,110,8000,'img/c8s.png','img/c8.png']);      /*人物车手*/
+        tx.executeSql(equipment_table,['哈雷摩托',1,1,110,8000,'img/m1s.png','img/m1.png']);
+        tx.executeSql(equipment_table,['滑板车',1,1,76,5520,'img/m2s.png','img/m2.png']);
+        tx.executeSql(equipment_table,['奔驰',1,1,86,5600,'img/m3s.png','img/m3.png']);
+        tx.executeSql(equipment_table,['宝马',1,1,100,6870,'img/m4s.png','img/m4.png']);    /*摩托车*/
+        tx.executeSql(equipment_table,['A1',2,2,10,1800,'img/w1s.png','img/w1.png']);
+        tx.executeSql(equipment_table,['A2',2,2,11,1830,'img/w2s.png','img/w2.png']);
+        tx.executeSql(equipment_table,['A3',2,2,14,2300,'img/w3s.png','img/w3.png']);
+        tx.executeSql(equipment_table,['A4',2,2,15,4200,'img/w1s.png','img/w1.png']);
+        tx.executeSql(equipment_table,['A5',2,2,18,4830,'img/w2s.png','img/w2.png']);
+        tx.executeSql(equipment_table,['A6',2,2,22,5300,'img/w3s.png','img/w3.png']);       /*摩托车轮*/
+        tx.executeSql(equipment_table,['TSI 1.4',3,3,10,3680,'img/engine01.png','img/engine01.png']);
+        tx.executeSql(equipment_table,['TFSI 2.0',3,3,12,8888,'img/engine03.png','img/engine03.png']);
+        tx.executeSql(equipment_table,['AMG 2.7',3,3,14,2300,'img/engine04.png','img/engine04.png']);
+        tx.executeSql(equipment_table,['CDI 2.7',3,3,18,9080,'img/engine05.png','img/engine05.png']);
+        tx.executeSql(equipment_table,['V8 3.8',3,3,19,10010,'img/engine06.png','img/engine06.png']);
+        tx.executeSql(equipment_table,['V8 4.5',3,3,22,12300,'img/engine07.png','img/engine07.png']);  /*引擎动机*/
         /*车手属性列表*/
         tx.executeSql("create table if not exists riders(" +
             "id         integer primary key autoincrement," +
@@ -61,6 +70,7 @@ $(function(){
             "now_value  integer default ( 1 )," +
             "degree     integer default ( 1 )," +
             "CONSTRAINT pk_ur PRIMARY KEY ( userid, riderid ))");
+        tx.executeSql("insert into user_rider(userid,riderid,degree) values(1,1,1);");
         /*用户拥有的车子列表*/
         tx.executeSql("create table if not exists user_bike(" +
             "id         integer primary key autoincrement," +

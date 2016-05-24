@@ -35,12 +35,10 @@ function Store(){
     $preview.css({
         width:"257px",height:"267px",background:"url(img/preview-bg.png) no-repeat",position:"absolute",left:"18px"
     });
-    var $rider=new Rider("img/c1.png");     /*角色拼接，不过太小了得要重写角色类了(-__-)b*/
+    /*var $rider=new Rider("img/c1.png");     /!*角色拼接，不过太小了得要重写角色类了(-__-)b*!/
     var $moToBody=new MoToBody("img/BikerBody01.png");
-    var $wheel=new Wheel("img/BikerExtraParts1.png");
-    var $roles=new Role($rider,$moToBody,$wheel);
-    $roles.add($preview);
-    $roles.setPosition(80,70);
+    var $wheel=new Wheel("img/BikerExtraParts1.png");*/
+    $roles=new Role1("img/c1.png","img/BikerBody01.png","img/BikerExtraParts1.png",$preview);
     $preview.appendTo($left);
     var $money_bg=$("<p></p>");
     var $My=$("<span>我的金币：</span>");
@@ -161,72 +159,35 @@ function Store(){
     var w=new Array;        /*轮子*/
     var r=new Array;        /*油箱*/
     db.transaction(function(tx){
-        tx.executeSql("select * from equipment where type=1",[],function(tx,results){
+        tx.executeSql("select * from equipment where type=1",[],function(tx,results){       /*车身*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_car)
+                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_car,$preview)
             }
         },null);
-        tx.executeSql("select * from equipment where type=2",[],function(tx,results){
+        tx.executeSql("select * from equipment where type=2",[],function(tx,results){       /*摩托车轮*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                w[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_wheel)
+                w[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_wheel,$preview)
             }
         },null);
-        tx.executeSql("select * from equipment where type=3",[],function(tx,results){
+        tx.executeSql("select * from equipment where type=3",[],function(tx,results){       /*引擎动力*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                r[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_tank)
+                r[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_tank,$preview)
             }
         },null);
-       /* tx.executeSql("select * from equipment where type=1",[],function(tx,results){
+        tx.executeSql("select * from equipment where type=4",[],function(tx,results){       /*人物车手*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores)
+                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores,$preview)
             }
-        },null);*/
+        },null);
     });
-
-    var m=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m1=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m2=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m3=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m4=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m5=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m6=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m7=new Items("别打脸","34567","img/c1s.png",$stores);
-    var m8=new Items("别打脸","34567","img/c1s.png",$stores);      /*商品人物展示*/
-    /*var c=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c1=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c2=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c3=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c4=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c5=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c6=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c7=new Items("不要脸","34567","img/m1s.png",$stores_car);
-    var c8=new Items("不要脸","34567","img/m1s.png",$stores_car);*/  /*商品车展示*/
-   /* var w=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w1=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w2=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w3=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w4=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w5=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w6=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w7=new Items("不要脸","34567","img/w1s.png",$stores_wheel);
-    var w8=new Items("不要脸","34567","img/w1s.png",$stores_wheel);  /!*商品车展示*!/
-    var r=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r1=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r2=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r3=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r4=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r5=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r6=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r7=new Items("不要脸","34567","img/m1s.png",$stores_tank);
-    var r8=new Items("不要脸","34567","img/m1s.png",$stores_tank);*/  /*商品车展示*/
     var $page=$("<div></div>");
     $page.css({
         width:"530px",height:"43px","margin-top":"20px","text-align":"center"
@@ -254,7 +215,8 @@ function Store(){
     $page.appendTo($shop);
 }
 /*商品类控件*/
-function Items(name,price,img,$parent){
+function Items(name,price,img,$parent,$P){
+    var that=this;
     this.$bg=$("<div></div>")
     this.$bg.css({
         width:"147px",height:"195px",border:"black solid 3px","border-radius":"15px",margin:"10px 0 0 15px",float:"left"});
@@ -282,6 +244,27 @@ function Items(name,price,img,$parent){
         width:"65px",height:"30px",float:"right",color:"white",cursor:"pointer","text-align": "center","line-height":"30px","margin-right":"3px","margin-top":"9px",
         "background-image":"url(img/buy-bt.png)","background-repeat":"no-repeat","background-position":"center center","background-size":"cover"});
     $shop_buy1.html("预览");
+    /*预览效果*/
+    $shop_buy1.click(function(){
+       //console.log(name);
+        db.transaction(function(tx){
+            tx.executeSql("select * from equipment",[],function(tx,results){
+                var len = results.rows.length;
+                var i=0;
+                for(;i<len;i++){
+                   if(results.rows.item(i).type==4){
+                       $roles=new Role1(results.rows.item(i).img2,"img/BikerBody01.png","img/BikerExtraParts1.png",$P);
+                   }
+                   if(results.rows.item(i).type==1){
+                        $roles=new Role1("img/c1.png",results.rows.item(i).img2,"img/BikerExtraParts1.png",$P);
+                   }
+                    if(results.rows.item(i).type==2){
+                        $roles=new Role1("img/c1.png","img/BikerBody01.png",results.rows.item(i).img2,$P);
+                    }
+                }
+            },null);
+        },null);
+    });
     this.$name.appendTo(this.$bg);
     this.$img.appendTo(this.$bg);
     $shop_price.appendTo(this.$bg);

@@ -18,7 +18,7 @@ function MapSelect(){
         director.runScene(new Main());
     });
     $black.appendTo(this.$MainBody);            /*返回按钮*/
-    var t=new TanChuang(that.$MainBody,"正在努力建设中。。。。。","img/001.gif");
+    //var t=new TanChuang(that.$MainBody,"正在努力建设中。。。。。","img/001.gif");
     this.$map=$("<div></div>");
     this.$map.css({
         width:"1200px",height:"450px",margin: '0 auto',position: 'absolute',overflow:'hidden',

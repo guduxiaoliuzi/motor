@@ -59,15 +59,17 @@ function Login(){
                         }
                     }
                     if(i<len){
-                        alert("登录成功");
-                        director.runScene(new Loading());
+                        var tc=new TanChuang(that.$MainBody,"恭喜登陆成功。。。","img/ppb.gif");
+                        tc.close.click(function(){
+                            director.runScene(new Loading());
+                        });
                     }else{
-                        alert("登录失败");
+                        var tc1=new TanChuang(that.$MainBody,"哎！！！输错啦。。。","img/003.gif")
                     }
                 },null);
             });
         }else{
-            alert("用户名或密码为空");
+            var tc2=new TanChuang(that.$MainBody,"你居然不写内容。。。","img/002.gif")
         }
     });
     this.$bt_login.appendTo($form);      /*登陆按钮*/

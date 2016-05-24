@@ -17,15 +17,15 @@ function TanChuang($parent,conter,setimg){
     this.ing.css({
         width:"420px",height:"25px","font-size":"200%", position:"absolute",left:"calc(50% - 150px)",top:"calc(50% - 110px)"
     });
-    var close=$("<div></div>");
-    close.css({
+    this.close=$("<div></div>");
+    this.close.css({
         width:"32px",height:"32px",position:"absolute",top:"-11px",right:"-10px", "background-size":"cover",
         "background-repeat":"no-repeat","background-image":"url(img/exit.png)","background-position":"center center"
     });
-    close.click(function(){
+    this.close.click(function(){
         $bg.css("display","none");
     });
-    close.appendTo($bg);
+    this.close.appendTo($bg);
     $img.appendTo($bg);
     this.ing.appendTo($bg);
     $bg.appendTo($parent);

@@ -25,6 +25,67 @@ function Wheel(img){
     this.cAttack=0;    /*攻击值*/
     this.cDefense=10;   /*防御值*/
 }
+function Role1(r_img,m_img,w_img,$parent) {
+    $parent.empty();
+    this.rimg=r_img;
+    this.mimg=m_img;
+    this.wimg=w_img;
+    var that = this;
+    this.Cmoney = 10000;
+    /*金币*/
+    this.CUnlock = new Array();
+    /*解锁关卡*/
+    var $role = $("<div></div>");
+    $role.css({
+        width: '101px',
+        height: '120px',
+        position: 'absolute',
+        left:"80px",
+        top:"70px"
+    });
+    /*骑手*/
+    var $rider = $("<div></div>");
+    $rider.css({
+        width: '78px',
+        height: '101px',
+        position: 'absolute',
+        top: '0px',
+        left: '5px',
+        "z-index": '2',
+        "background": "url(./" + this.rimg + ")no-repeat center"
+    });
+    $rider.appendTo($role);
+
+    /*摩托车*/
+    var $moToBody = $("<div></div>");
+    $moToBody.css({
+        width: '85px',
+        height: '36px',
+        position: 'absolute',
+        bottom: '20px',
+        left: '10px',
+        "z-index": '1',
+        "background": "url(./" + this.mimg + ")no-repeat center"
+    });
+    $moToBody.appendTo($role);
+    /*轮子*/
+    var $wheel_l = $("<div></div>");
+    $wheel_l.css({
+        width: '35px',
+        height: '35px',
+        position: 'absolute',
+        bottom: '7px',
+        "background": "url(./" + this.wimg + ")no-repeat center",
+        animation: 'wheelRotate 1s linear infinite'
+    });
+    var $wheel_r = $wheel_l.clone();
+    $wheel_l.css("left", "3px");
+    $wheel_r.css("right", "0px");
+    $wheel_l.appendTo($role);
+    $wheel_r.appendTo($role);
+    $role.appendTo($parent);
+
+}
 function Role(riders,moToBodys,wheels){
     var that=this;
     this.Cmoney=10000;  /*金币*/
