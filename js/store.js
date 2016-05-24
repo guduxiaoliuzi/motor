@@ -38,7 +38,7 @@ function Store(){
     /*var $rider=new Rider("img/c1.png");     /!*角色拼接，不过太小了得要重写角色类了(-__-)b*!/
     var $moToBody=new MoToBody("img/BikerBody01.png");
     var $wheel=new Wheel("img/BikerExtraParts1.png");*/
-    $roles=new Role1("img/c1.png","img/BikerBody01.png","img/BikerExtraParts1.png",$preview);
+    //$roles=new Role1("img/c1.png","img/BikerBody01.png","img/BikerExtraParts1.png",$preview);
     $preview.appendTo($left);
     var $money_bg=$("<p></p>");
     var $My=$("<span>我的金币：</span>");
@@ -184,7 +184,7 @@ function Store(){
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores,$preview)
+                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores,$preview);
             }
         },null);
     });
@@ -239,21 +239,41 @@ function Items(name,price,img,$parent,$P){
         width:"65px",height:"30px",float:"left",color:"white","text-align": "center","line-height":"30px","margin-left":"3px","margin-top":"9px",
         cursor:"pointer","background-image":"url(img/buy-bt.png)","background-repeat":"no-repeat","background-position":"center center","background-size":"cover"});
     $shop_buy.html("购买");
-    var $shop_buy1=$("<div></div>")
+    var $shop_buy1=$("<div></div>");
     $shop_buy1.css({
         width:"65px",height:"30px",float:"right",color:"white",cursor:"pointer","text-align": "center","line-height":"30px","margin-right":"3px","margin-top":"9px",
         "background-image":"url(img/buy-bt.png)","background-repeat":"no-repeat","background-position":"center center","background-size":"cover"});
     $shop_buy1.html("预览");
     /*预览效果*/
-    $shop_buy1.click(function(){
-       //console.log(name);
-        db.transaction(function(tx){
-            tx.executeSql("select * from equipment",[],function(tx,results){
-                var len = results.rows.length;
-                var i=0;
-                for(;i<len;i++){
+    db.transaction(function(tx){
+
+        tx.executeSql("select * from equipment where type=4",[],function(tx,results){
+            var len =results.rows.length;
+            var i=0;
+            for(i;i<len;i++){
+
+                (function(i)
+                {$shop_buy1.click(function(event){
+                    console.log(results.rows.item(i).name);
+                    $roles=new Role1(results.rows.item(i).img2,"img/BikerBody01.png","img/BikerExtraParts1.png",$P)
+                })})(i);
+            }
+        },function(e,results){
+            alert(e.message);
+    })});
+    //$shop_buy1.click(function(){
+    //
+    //    db.transaction(function(tx){
+    //        tx.executeSql("select * from equipment where type=4",[],function(tx,results){
+    //            var len = results.rows.length;   console.log(name);
+    //            var i=0;
+    //            for(;i<len;i++)
+    //            {
+    //                results.rows.item(i).img2
+    //            }
+                //$roles=new Role1(results.rows.item(i).img2,"img/BikerBody01.png","img/BikerExtraParts1.png",$P);
+                /*for(;i<len;i++){
                    if(results.rows.item(i).type==4){
-                       $roles=new Role1(results.rows.item(i).img2,"img/BikerBody01.png","img/BikerExtraParts1.png",$P);
                    }
                    if(results.rows.item(i).type==1){
                         $roles=new Role1("img/c1.png",results.rows.item(i).img2,"img/BikerExtraParts1.png",$P);
@@ -261,10 +281,12 @@ function Items(name,price,img,$parent,$P){
                     if(results.rows.item(i).type==2){
                         $roles=new Role1("img/c1.png","img/BikerBody01.png",results.rows.item(i).img2,$P);
                     }
-                }
-            },null);
-        },null);
-    });
+                }*/
+    //        },function(e,results){
+    //            alert(e.message);
+    //        });
+    //    },null);
+    //});
     this.$name.appendTo(this.$bg);
     this.$img.appendTo(this.$bg);
     $shop_price.appendTo(this.$bg);

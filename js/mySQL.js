@@ -35,8 +35,8 @@ $(function(){
         tx.executeSql(equipment_table,['大麻哈2',4,1,110,8000,'img/c4s.png','img/c4.png']);
         tx.executeSql(equipment_table,['大麻哈3',4,1,110,8000,'img/c5s.png','img/c5.png']);
         tx.executeSql(equipment_table,['大麻哈4',4,1,110,8000,'img/c6s.png','img/c6.png']);
-        tx.executeSql(equipment_table,['大麻哈5',4,1,110,8000,'img/c7s.png','img/c7.png']);
-        tx.executeSql(equipment_table,['大麻哈6',4,1,110,8000,'img/c8s.png','img/c8.png']);      /*人物车手*/
+      /*  tx.executeSql(equipment_table,['大麻哈5',4,1,110,8000,'img/c7s.png','img/c7.png']);
+        tx.executeSql(equipment_table,['大麻哈6',4,1,110,8000,'img/c8s.png','img/c8.png']);*/      /*人物车手*/
         tx.executeSql(equipment_table,['哈雷摩托',1,1,110,8000,'img/m1s.png','img/m1.png']);
         tx.executeSql(equipment_table,['滑板车',1,1,76,5520,'img/m2s.png','img/m2.png']);
         tx.executeSql(equipment_table,['奔驰',1,1,86,5600,'img/m3s.png','img/m3.png']);
