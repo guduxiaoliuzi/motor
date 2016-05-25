@@ -251,29 +251,26 @@ function Items(name,price,img,$parent,$P){
             var len =results.rows.length;
             var i=0;
             for(i;i<len;i++){
-
                 (function(i)
                 {$shop_buy1.click(function(event){
                     console.log(results.rows.item(i).name);
-                    $roles=new Role1(results.rows.item(i).img2,"img/BikerBody01.png","img/BikerExtraParts1.png",$P)
                 })})(i);
             }
         },function(e,results){
             alert(e.message);
     })});
 
-    //$shop_buy1.click(function(){
-    //
-    //    db.transaction(function(tx){
-    //        tx.executeSql("select * from equipment where type=4",[],function(tx,results){
-    //            var len = results.rows.length;   console.log(name);
-    //            var i=0;
-    //            for(;i<len;i++)
-    //            {
-    //                results.rows.item(i).img2
-    //            }
-                //$roles=new Role1(results.rows.item(i).img2,"img/BikerBody01.png","img/BikerExtraParts1.png",$P);
-                /*for(;i<len;i++){
+    $shop_buy1.click(function(){
+
+       db.transaction(function(tx){
+           tx.executeSql("select * from equipment where type=4",[],function(tx,results){
+               var len = results.rows.length;   console.log(name);
+              var i=0;
+                for(;i<len;i++)
+                {
+                    results.rows.item(i).img2
+               }
+               for(;i<len;i++){
                    if(results.rows.item(i).type==4){
                    }
                    if(results.rows.item(i).type==1){
@@ -282,12 +279,12 @@ function Items(name,price,img,$parent,$P){
                     if(results.rows.item(i).type==2){
                         $roles=new Role1("img/c1.png","img/BikerBody01.png",results.rows.item(i).img2,$P);
                     }
-                }*/
-    //        },function(e,results){
-    //            alert(e.message);
-    //        });
-    //    },null);
-    //});
+                }
+           },function(e,results){
+               alert(e.message);
+            });
+        },null);
+    });
     this.$name.appendTo(this.$bg);
     this.$img.appendTo(this.$bg);
     $shop_price.appendTo(this.$bg);

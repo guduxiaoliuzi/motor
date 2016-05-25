@@ -60,14 +60,35 @@ function Register(){
     this.$bt_rgister.attr({
         type:"text",value:"注册新账号",name:"submit"
     });
-    this.$bt_rgister.click(function(){
+    /*submitHandler:*/this.$bt_rgister.click(function(form){
         var name=$put_name.val();
         var pwd=$put_pwd2.val();
+        var len= 0,i=0;
+      /*  db.transaction(function(tx){
+            tx.executeSql('SELECT login FROM users',[],function(tx,results){
+                len=results.rows.length;
+                for(i=0;i<len;i++){
+                    if(results.rows.item(i).login==name){
+                        var tc4=new TanChuang(that.$MainBody,"哎！被注册啦","img/003.gif");
+                        break;
+                    }
+                }
+            },null);
+        });
+        db.transaction(function(tx){
+            if(len==i){/!* 添加用户信息*!/
+                tx.executeSql("INSERT INTO [users] ([login], [password], [u_name], [level], [money], [online_time], [last_time]) VALUES (?,?, ?, 1, 20000, null, null)",[name, pwd, name]);
+                var tc3=new TanChuang(that.$MainBody,"恭喜注册成功。。。","img/ppb.gif");
+                tc3.close.click(function(){
+                    director.runScene(new Loading());
+                });
+            }
+        });
+        return false;*/
         if(name!=""||pwd!=""){
             db.transaction(function(tx){
                 tx.executeSql("select * from users",[],function(tx,results){
                     var len = results.rows.length;
-                    var i=0;
                     for(;i<len;i++){
                         if(results.rows.item(i).login == name){
                             break;
