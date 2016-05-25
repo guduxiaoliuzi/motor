@@ -193,7 +193,6 @@ function Store(){
                 cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_car,$preview,results.rows.item(i).id);
                 (function(n){
                     cs[n].$shop_buy1.on("click",(function(){
-                        console.log($moToBody.css("background"));
                         $moToBody.css("background","url("+results.rows.item(n).img2+")");
                     }));
                 })(i)
@@ -203,14 +202,24 @@ function Store(){
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                w[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_wheel,$preview,results.rows.item(i).id)
+                w[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_wheel,$preview,results.rows.item(i).id);
+                (function(n){
+                    cs[n].$shop_buy1.on("click",(function(){
+                        $wheel_l.css("background","url("+results.rows.item(n).img2+")");
+                    }));
+                })(i)
             }
         },null);
         tx.executeSql("select * from equipment where type=3",[],function(tx,results){       /*引擎动力*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                r[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_tank,$preview,results.rows.item(i).id)
+                r[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_tank,$preview,results.rows.item(i).id);
+                (function(n){
+                    cs[n].$shop_buy1.on("click",(function(){
+                        $equ.css("background","url("+results.rows.item(n).img2+")");
+                    }));
+                })(i)
             }
         },null);
         tx.executeSql("select * from riders",[],function(tx,results){       /*人物车手*/
@@ -218,6 +227,11 @@ function Store(){
             var i=0;
             for(;i<len;i++){
                 cs[i]=new Items(results.rows.item(i).r_name,results.rows.item(i).price,results.rows.item(i).img_1,$stores,$preview,results.rows.item(i).id);
+                (function(n){
+                    cs[n].$shop_buy1.on("click",(function(){
+                        $rider.css("background","url("+results.rows.item(n).img2+")");
+                    }));
+                })(i)
             }
         },null);
     });
