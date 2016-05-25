@@ -129,14 +129,14 @@ $(function(){
             "CONSTRAINT pk_ue PRIMARY KEY ( userid, missionid));");
         var user_mission_table="insert into user_mission(userid,missionid,degree) values(?,?,?);";
         tx.executeSql(user_mission_table,[1,1,1]);
-        tx.executeSql(user_mission_table,[1,2,1]);
+        /*tx.executeSql(user_mission_table,[1,2,1]);
         tx.executeSql(user_mission_table,[1,3,1]);
         tx.executeSql(user_mission_table,[1,4,2]);
         tx.executeSql(user_mission_table,[1,5,2]);
         tx.executeSql(user_mission_table,[1,6,2]);
         tx.executeSql(user_mission_table,[1,7,3]);
         tx.executeSql(user_mission_table,[1,8,3]);
-        tx.executeSql(user_mission_table,[1,9,3]);
+        tx.executeSql(user_mission_table,[1,9,3]);*/
         /*用户跑完的比赛的结果列表*/
         tx.executeSql("create table if not exists match_result (" +
             "userid     integer references users ( id )," +

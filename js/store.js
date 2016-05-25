@@ -39,6 +39,32 @@ function Store(){
     var $moToBody=new MoToBody("img/BikerBody01.png");
     var $wheel=new Wheel("img/BikerExtraParts1.png");*/
     //$roles=new Role1("img/c1.png","img/BikerBody01.png","img/BikerExtraParts1.png",$preview);
+    var $rider=$("<div></div>");
+    $rider.css({
+        width:"78px",height:"101px",position:"absolute",left:"calc(50% - 39px)",background:"url(img/c1.png)",
+        top:"30px"
+    });
+    var $moToBody=$("<div></div>");
+    $moToBody.css({
+        width:"91px",height:"47px",left:"calc(50% - 45px)",background:"url(img/moto01.png)",position:"absolute",
+        top:"100px"
+    });
+    var $wheel_l=$("<div></div>");
+    $wheel_l.css({
+        width:"35px",height:"35px",background:"url(img/w1.png)",position:"absolute",top:"115px"
+    });
+    var $wheel_r=$wheel_l.clone();
+    var $equ=$("<div></div>");
+    $equ.css({
+        width:"50px",height:"50px",background:"url(img/w1.png)",position:"absolute",top:"165px",left:"20px"
+    });
+    $wheel_l.css("left","calc(50% - 55px)");
+    $wheel_r.css("left","calc(50% + 15px)");
+    $equ.appendTo($preview);            /*引擎*/
+    $wheel_r.appendTo($preview);        /*车轮*/
+    $wheel_l.appendTo($preview);
+    $moToBody.appendTo($preview);       /*车身*/
+    $rider.appendTo($preview);          /*骑手*/
     $preview.appendTo($left);
     var $money_bg=$("<p></p>");
     var $My=$("<span>我的金币：</span>");
@@ -158,33 +184,40 @@ function Store(){
     var cs=new Array;        /*摩托车*/
     var w=new Array;        /*轮子*/
     var r=new Array;        /*油箱*/
+
     db.transaction(function(tx){
         tx.executeSql("select * from equipment where type=1",[],function(tx,results){       /*车身*/
-            var len = results.rows.length;
-            var i=0;
+        var len = results.rows.length;
+        var i=0;
             for(;i<len;i++){
-                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_car,$preview)
+                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_car,$preview,results.rows.item(i).id);
+                (function(n){
+                    cs[n].$shop_buy1.on("click",(function(){
+                        console.log($moToBody.css("background"));
+                        $moToBody.css("background","url("+results.rows.item(n).img2+")");
+                    }));
+                })(i)
             }
         },null);
         tx.executeSql("select * from equipment where type=2",[],function(tx,results){       /*摩托车轮*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                w[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_wheel,$preview)
+                w[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_wheel,$preview,results.rows.item(i).id)
             }
         },null);
         tx.executeSql("select * from equipment where type=3",[],function(tx,results){       /*引擎动力*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                r[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_tank,$preview)
+                r[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores_tank,$preview,results.rows.item(i).id)
             }
         },null);
-        tx.executeSql("select * from equipment where type=4",[],function(tx,results){       /*人物车手*/
+        tx.executeSql("select * from riders",[],function(tx,results){       /*人物车手*/
             var len = results.rows.length;
             var i=0;
             for(;i<len;i++){
-                cs[i]=new Items(results.rows.item(i).name,results.rows.item(i).price,results.rows.item(i).img,$stores,$preview);
+                cs[i]=new Items(results.rows.item(i).r_name,results.rows.item(i).price,results.rows.item(i).img_1,$stores,$preview,results.rows.item(i).id);
             }
         },null);
     });
@@ -215,8 +248,9 @@ function Store(){
     $page.appendTo($shop);
 }
 /*商品类控件*/
-function Items(name,price,img,$parent,$P){
+function Items(name,price,img,$parent,$p,id){
     var that=this;
+    this.id=id;
     this.$bg=$("<div></div>")
     this.$bg.css({
         width:"147px",height:"195px",border:"black solid 3px","border-radius":"15px",margin:"10px 0 0 15px",float:"left"});
@@ -234,62 +268,22 @@ function Items(name,price,img,$parent,$P){
     this.$price.html(price);
     this.$price.css({ float:"right" });
     this.$price.appendTo($shop_price);
-    var $shop_buy=$("<div></div>")
-    $shop_buy.css({
+    this.$shop_buy=$("<div></div>")
+    this.$shop_buy.css({
         width:"65px",height:"30px",float:"left",color:"white","text-align": "center","line-height":"30px","margin-left":"3px","margin-top":"9px",
         cursor:"pointer","background-image":"url(img/buy-bt.png)","background-repeat":"no-repeat","background-position":"center center","background-size":"cover"});
-    $shop_buy.html("购买");
-    var $shop_buy1=$("<div></div>");
-    $shop_buy1.css({
+    this.$shop_buy.html("购买");
+    this.$shop_buy1=$("<div></div>");
+    this.$shop_buy1.css({
         width:"65px",height:"30px",float:"right",color:"white",cursor:"pointer","text-align": "center","line-height":"30px","margin-right":"3px","margin-top":"9px",
         "background-image":"url(img/buy-bt.png)","background-repeat":"no-repeat","background-position":"center center","background-size":"cover"});
-    $shop_buy1.html("预览");
+    this.$shop_buy1.html("预览");
     /*预览效果*/
-    db.transaction(function(tx){
-
-        tx.executeSql("select * from equipment where type=4",[],function(tx,results){
-            var len =results.rows.length;
-            var i=0;
-            for(i;i<len;i++){
-                (function(i)
-                {$shop_buy1.click(function(event){
-                    console.log(results.rows.item(i).name);
-                })})(i);
-            }
-        },function(e,results){
-            alert(e.message);
-    })});
-
-    $shop_buy1.click(function(){
-
-       db.transaction(function(tx){
-           tx.executeSql("select * from equipment where type=4",[],function(tx,results){
-               var len = results.rows.length;   console.log(name);
-              var i=0;
-                for(;i<len;i++)
-                {
-                    results.rows.item(i).img2
-               }
-               for(;i<len;i++){
-                   if(results.rows.item(i).type==4){
-                   }
-                   if(results.rows.item(i).type==1){
-                        $roles=new Role1("img/c1.png",results.rows.item(i).img2,"img/BikerExtraParts1.png",$P);
-                   }
-                    if(results.rows.item(i).type==2){
-                        $roles=new Role1("img/c1.png","img/BikerBody01.png",results.rows.item(i).img2,$P);
-                    }
-                }
-           },function(e,results){
-               alert(e.message);
-            });
-        },null);
-    });
     this.$name.appendTo(this.$bg);
     this.$img.appendTo(this.$bg);
     $shop_price.appendTo(this.$bg);
-    $shop_buy.appendTo(this.$bg);
-    $shop_buy1.appendTo(this.$bg);
+    this.$shop_buy.appendTo(this.$bg);
+    this.$shop_buy1.appendTo(this.$bg);
     this.$bg.appendTo($parent);
 }
 /*商店类别控件*/

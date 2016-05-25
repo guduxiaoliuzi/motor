@@ -5,6 +5,7 @@ var style=document.createElement("style");
 document.head.appendChild(style);
 var sheet=style.sheet;
 sheet.insertRule("*{margin:0;padding:0}");
+
 var director;
 $(function(){
     director=new Director($("body"));
